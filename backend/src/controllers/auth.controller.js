@@ -25,11 +25,13 @@ async function registerUser(req, res) {
     },
     process.env.JWT_SECRET,
   );
+  const isProduction = process.env.NODE_ENV === "production";
 
   res.cookie("userToken", token, {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   res.status(201).json({
@@ -42,7 +44,7 @@ async function registerUser(req, res) {
   });
 
   await emailService.sendRegistrationEmail(user.email, user.name);
-  //   sendRegistrationEmai
+  // sendRegistrationEmail
 }
 
 async function loginUser(req, res) {
@@ -76,7 +78,9 @@ async function loginUser(req, res) {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
+
   res.status(200).json({
     message: "User logged In successfully",
     user: {
