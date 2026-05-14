@@ -26,7 +26,11 @@ async function registerUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("userToken", token);
+  res.cookie("userToken", token, {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
 
   res.status(201).json({
     message: "New user created",
