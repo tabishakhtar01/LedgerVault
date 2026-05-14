@@ -21,6 +21,8 @@ function Login() {
 
       toast.success(response.data.message || "Login successful");
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
 
       navigate("/dashboard");
     } catch (error) {

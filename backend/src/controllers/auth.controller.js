@@ -41,6 +41,7 @@ async function registerUser(req, res) {
 
   return res.status(201).json({
     message: "New user created",
+    token,
     user: {
       id: user._id,
       name: user.name,
@@ -81,6 +82,7 @@ async function loginUser(req, res) {
 
   return res.status(200).json({
     message: "User logged In successfully",
+    token,
     user: {
       id: user._id,
       name: user.name,
