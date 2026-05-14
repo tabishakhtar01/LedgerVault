@@ -66,7 +66,13 @@ async function loginUser(req, res) {
     },
     process.env.JWT_SECRET,
   );
-  res.cookie("userToken", token);
+  const isProduction = process.env.NODE_ENV === "production";
+
+  res.cookie("userToken", token, {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
   res.status(200).json({
     message: "User logged In successfully",
     user: {
