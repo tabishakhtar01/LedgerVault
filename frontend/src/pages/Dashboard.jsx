@@ -59,6 +59,12 @@ function Dashboard() {
       setAccounts(accountsWithBalance);
       setTotalBalance(cumulativeBalance);
     } catch (error) {
+      if (error.response?.status === 404) {
+        setAccounts([]);
+        setTotalBalance(0);
+        return;
+      }
+
       toast.error(error.response?.data?.message || "Failed to fetch accounts");
     } finally {
       setLoading(false);

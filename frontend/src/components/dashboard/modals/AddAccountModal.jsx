@@ -14,7 +14,7 @@ function AddAccountModal({ open, onClose, onSuccess }) {
     try {
       setCreatingAccount(true);
 
-      const response = await api.post("/accounts", {
+      const response = await api.post("accounts/create-account", {
         currency,
       });
 
