@@ -7,11 +7,19 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
 app.get("/", (req, res) => {
   res.send("Welcome to the Ledger System API");
 });
 app.use("/api/auth", authRouter);
 app.use("/api/accounts", accountRouter);
 app.use("/api/transactions", transactionRouter);
-
 module.exports = app;

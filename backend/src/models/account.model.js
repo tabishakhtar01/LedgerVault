@@ -79,6 +79,20 @@ accountSchema.methods.getBalance = async function () {
   return balanceAggregation[0].balance;
 };
 
+accountSchema.methods.getTransactions = async function () {
+  const ledgerModel = require("./ledger.model");
+  const transactions = await ledgerModel
+    .find({
+      account: this._id,
+    })
+    .sort({ createdAt: -1 });
+  if (!transactions.length === 0) {
+    return [];
+  }
+
+  return transactions;
+};
+
 const accountModel = mongoose.model("account", accountSchema);
 
 module.exports = accountModel;
